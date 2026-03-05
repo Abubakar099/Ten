@@ -1,7 +1,7 @@
 ﻿(function () {
   "use strict";
 
-  var FALLBACK_404 = "/404.html";
+  var FALLBACK_404 = "./404.html";
 
   function isIgnoredHref(href) {
     return (

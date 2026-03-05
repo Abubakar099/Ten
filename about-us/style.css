@@ -4155,8 +4155,13 @@
       color: #f0eee5;
   }
 
-  .nav_logo img {
-      transition: filter 0.3s ease;
+  .nav_logo.text-color-dark {
+      color: #141414;
+  }
+
+  .text-color-light,
+  .is-text-link {
+      color: #fff;
   }
 
   body.menu-open .nav_logo img {
@@ -4377,7 +4382,7 @@
       align-items: stretch;
       display: flex;
   }
-  
+
 
   .logo-img {
       transition: filter 0.3s ease;
@@ -5158,7 +5163,7 @@
   .logo-link {
       grid-column-gap: 12.63px;
       grid-row-gap: 12.63px;
-      color: var(--_palette---yellow);
+      color: #CEFF00;
       align-items: center;
       display: flex;
   }
@@ -5260,6 +5265,26 @@
 
   .tenex-logo-nav {
       color: var(--_palette---white);
+      width: 100%;
+      max-width: 140px;
+  }
+
+  .tenex-logo-nav img {
+      display: block;
+      width: 100%;
+      height: auto;
+  }
+
+  @media (min-width: 768px) {
+      .tenex-logo-nav {
+          max-width: 150px;
+      }
+  }
+
+  @media (min-width: 992px) {
+      .tenex-logo-nav {
+          max-width: 180px;
+      }
   }
 
   .approach-img-wrapper {

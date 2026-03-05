@@ -1,15 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   const toggleButton = document.querySelector(".burger");
+  const nav = document.querySelector(".nav");
   let isOpen = false;
 
   const timeline = gsap.timeline({ paused: true });
   timeline.set(".block-overlay", { display: "block" });
-
-  timeline.to(".logo-link, .tenex-logo-nav", {
-    color: "black",
-    duration: 0.4,
-    ease: "power2.out",
-  });
 
   // Animate burger pseudo-elements by targeting the CSS variable
   timeline.to(
@@ -43,17 +38,20 @@ document.addEventListener("DOMContentLoaded", function () {
   // Toggle logic
   toggleButton.addEventListener("click", function () {
     toggleButton.classList.toggle("active");
+    nav?.classList.toggle("is-active");
 
     if (isOpen) {
       // close menu
       timeline.reverse();
       document.body.classList.remove("no-scroll");
       document.body.classList.remove("menu-open");
+      toggleButton.setAttribute("aria-expanded", "false");
     } else {
       // open menu
       timeline.play();
       document.body.classList.add("no-scroll");
       document.body.classList.add("menu-open");
+      toggleButton.setAttribute("aria-expanded", "true");
     }
     isOpen = !isOpen;
   });

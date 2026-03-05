@@ -5217,7 +5217,27 @@ body.menu-open .nav_logo img {
 }
 
 .tenex-logo-nav {
-    color: var(--_palette---white);
+  color: var(--_palette---white);
+  width: 100%;
+  max-width: 120px;
+}
+
+.tenex-logo-nav img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .tenex-logo-nav {
+    max-width: 150px;
+  }
+}
+
+@media (min-width: 992px) {
+  .tenex-logo-nav {
+    max-width: 180px;
+  }
 }
 
 .approach-img-wrapper {
