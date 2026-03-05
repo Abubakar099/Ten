@@ -1,198 +1,125 @@
-// *************  website code ***********
-document.addEventListener("DOMContentLoaded", function () {
-  const toggleButton = document.querySelector(".burger");
-  let isOpen = false;
+document.addEventListener("DOMContentLoaded", () => {
 
-  const timeline = gsap.timeline({ paused: true });
-  timeline.set(".block-overlay", { display: "block" });
+  // ---------- MENU ----------
+  const btn = document.querySelector(".burger");
+  let open = false;
 
-  timeline.to(".logo-link, .tenex-logo-nav", {
-    color: "black",
-    duration: 0.4,
-    ease: "power2.out",
-  });
-
-  timeline.to(
-    ".burger",
-    {
-      "--burger-color": "#000000",
-      duration: 0.4,
-      ease: "power2.out",
-    },
-    "<",
-  );
-  timeline.to(".block", {
-    duration: 0.9,
-    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-    stagger: 0.06,
-    ease: "power2.inOut",
-  });
-
-  timeline.to(
-    ".block-menu-title, .block-menu-item",
-    {
-      duration: 0.25,
+  const tl = gsap.timeline({ paused: true })
+    .set(".block-overlay", { display: "block" })
+    .to(".logo-link, .tenex-logo-nav", { color: "black", duration: 0.4, ease: "power2.out" })
+    .to(".burger", { "--burger-color": "#000000", duration: 0.4, ease: "power2.out" }, "<")
+    .to(".block", {
+      duration: 0.9,
+      clipPath: "polygon(0% 0%,100% 0%,100% 100%,0% 100%)",
+      stagger: 0.06,
+      ease: "power2.inOut"
+    })
+    .to(".block-menu-title, .block-menu-item", {
       opacity: 1,
-      stagger: 0.04,
-      
-    },
-    "-=0.4",
-  );
+      duration: 0.25,
+      stagger: 0.04
+    }, "-=0.4");
 
-  toggleButton.addEventListener("click", function () {
-    toggleButton.classList.toggle("active");
-
-    if (isOpen) {
-  
-      timeline.reverse();
-      document.body.classList.remove("no-scroll");
-      document.body.classList.remove("menu-open");
-    } else {
-  
-      timeline.play();
-      document.body.classList.add("no-scroll");
-      document.body.classList.add("menu-open");
-    }
-    isOpen = !isOpen;
+  btn?.addEventListener("click", () => {
+    btn.classList.toggle("active");
+    open ? tl.reverse() : tl.play();
+    document.body.classList.toggle("no-scroll", !open);
+    document.body.classList.toggle("menu-open", !open);
+    open = !open;
   });
-});
-// end 
-    
-      document.addEventListener("DOMContentLoaded", function () {
-        // Ensure grid is visible on page load
-        gsap.set(".load_grid", { display: "grid" });
-        gsap.set(".load_grid-item", { opacity: 1 });
 
-        // Animate the grid away to reveal the page
-        gsap.to(".load_grid-item", {
-          opacity: 0,
+
+  // ---------- PAGE LOAD GRID ----------
+  gsap.set(".load_grid", { display: "grid" });
+  gsap.set(".load_grid-item", { opacity: 1 });
+
+  gsap.to(".load_grid-item", {
+    opacity: 0,
+    duration: 0.2,
+    stagger: { amount: 0.5, from: "random" },
+    onComplete: () => gsap.set(".load_grid", { display: "none" })
+  });
+
+  $("a").on("click", function (e) {
+    const href = $(this).attr("href");
+
+    if (
+      this.hostname === location.host &&
+      href.indexOf("#") === -1 &&
+      $(this).attr("target") !== "_blank"
+    ) {
+      e.preventDefault();
+
+      gsap.set(".load_grid", { display: "grid" });
+
+      gsap.fromTo(".load_grid-item",
+        { opacity: 0 },
+        {
+          opacity: 1,
           duration: 0.2,
           stagger: { amount: 0.5, from: "random" },
-          onComplete: () => {
-            gsap.set(".load_grid", { display: "none" });
-          },
-        });
+          onComplete: () => location.href = href
+        }
+      );
+    }
+  });
 
-        // Handle link clicks
-        $("a").on("click", function (e) {
-          if (
-            $(this).prop("hostname") === window.location.host &&
-            $(this).attr("href").indexOf("#") === -1 &&
-            $(this).attr("target") !== "_blank"
-          ) {
-            e.preventDefault();
-            let destination = $(this).attr("href");
-
-            // Bring grid back and animate it in to cover page
-            gsap.set(".load_grid", { display: "grid" });
-            gsap.fromTo(
-              ".load_grid-item",
-              { opacity: 0 },
-              {
-                opacity: 1,
-                duration: 0.2,
-                stagger: { amount: 0.5, from: "random" },
-                onComplete: () => {
-                  window.location = destination;
-                },
-              },
-            );
-          }
-        });
-
-        // Fix back/forward cache issue
-        window.onpageshow = function (event) {
-          if (event.persisted) {
-            window.location.reload();
-          }
-        };
-      });
-    
-
-    
-      document.addEventListener("DOMContentLoaded", () => {
-        // Target all Webflow "button-like" elements
-        document.querySelectorAll("[data-url]").forEach((el) => {
-          el.addEventListener("click", (e) => {
-            const url = el.getAttribute("data-url");
-            if (!url) return;
-
-            // ⌘ (Mac) or Ctrl (Win) + click → open in new tab
-            if (e.metaKey || e.ctrlKey) {
-              window.open(url, "_blank");
-            }
-            // Middle mouse click → open in new tab
-            else if (e.button === 1) {
-              window.open(url, "_blank");
-            }
-            // Normal click → same tab
-            else {
-              window.location.href = url;
-            }
-          });
-        });
-      });
-    
-    
-      // Wait for the DOM to load
-      document.addEventListener("DOMContentLoaded", function () {
-        const selectInput = document.getElementById("hear-about-us");
-        const otherDiv = document.getElementById("other-selected");
-
-        // Initialize: hide the div by default
-        otherDiv.style.display = "none";
-
-        // Listen for changes
-        selectInput.addEventListener("change", function () {
-          if (selectInput.value === "Other") {
-            otherDiv.style.display = "block";
-          } else {
-            otherDiv.style.display = "none";
-          }
-        });
-      });
-    
-
-    
-      document.addEventListener("DOMContentLoaded", () => {
-        // Split text into words
-        const splitH1 = new SplitType(".text-h1-xl", { types: "words" });
-        const splitXL = new SplitType(".text-xl", { types: "words" });
-
-        // Create GSAP timeline
-        const tl = gsap.timeline();
-
-        // Animate h1 words
-        tl.from(splitH1.words, {
-          y: -100, // drop in from below
-          opacity: 0,
-          duration: 1,
-          ease: "back.inOut",
-          stagger: 0.1, // each word one after the other
-        });
-
-        // Animate xl text words after
-        tl.from(
-          splitXL.words,
-          {
-            y: -100,
-            opacity: 0,
-            duration: 1,
-            ease: "back.inOut",
-            stagger: 0.1,
-          },
-          "+=0.3",
-        ); // small delay after first animation finishes
-      });
-    
+  window.onpageshow = e => e.persisted && location.reload();
 
 
-    //   text Animation 
-    gsap.registerPlugin(ScrollTrigger);
+  // ---------- DATA URL CLICK ----------
+  document.querySelectorAll("[data-url]").forEach(el => {
+    el.addEventListener("click", e => {
+      const url = el.dataset.url;
+      if (!url) return;
 
-gsap.from(".load-in",{
-    y:-100,
-    opacity:0,
+      if (e.metaKey || e.ctrlKey || e.button === 1) window.open(url, "_blank");
+      else location.href = url;
+    });
+  });
+
+
+  // ---------- FORM SELECT ----------
+  const select = document.getElementById("hear-about-us");
+  const other = document.getElementById("other-selected");
+
+  if (select && other) {
+    other.style.display = "none";
+    select.addEventListener("change", () => {
+      other.style.display = select.value === "Other" ? "block" : "none";
+    });
+  }
+
+
+  // ---------- TEXT SPLIT ANIMATION ----------
+  const splitH1 = new SplitType(".text-h1-xl", { types: "words" });
+  const splitXL = new SplitType(".text-xl", { types: "words" });
+
+  gsap.timeline()
+    .from(splitH1.words, {
+      y: -100,
+      opacity: 0,
+      duration: 1,
+      ease: "back.inOut",
+      stagger: 0.1
+    })
+    .from(splitXL.words, {
+      y: -100,
+      opacity: 0,
+      duration: 1,
+      ease: "back.inOut",
+      stagger: 0.1
+    }, "+=0.3");
+
+
+  // ---------- SCROLL LOAD ----------
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".load-in", {
+    y: -100,
+    opacity: 0,
     stagger: 0.2,
-    ease:"none"
+    ease: "none"
+  });
+
 });
