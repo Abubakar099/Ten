@@ -180,62 +180,65 @@ accordionItems.forEach((item) => {
 // *************  website code ***********
 document.addEventListener("DOMContentLoaded", function () {
   const toggleButton = document.querySelector(".burger");
-  const nav = document.querySelector(".nav");
   let isOpen = false;
 
   const timeline = gsap.timeline({ paused: true });
   timeline.set(".block-overlay", { display: "block" });
+  timeline.to(".logo-link, .tenex-logo-nav", {
+    color: "black",
+    duration: 0.4,
+    ease: "power3.inOut",
+  });
 
-  // Animate burger pseudo-elements by targeting the CSS variable
+  
   timeline.to(
     ".burger",
     {
       "--burger-color": "#000000",
-      duration: 0.4,
-      ease: "power2.out",
+      duration: 0.5,
+      ease: "power3.inOut",
     },
     "<",
   );
-  // Overlay blocks animation
+
   timeline.to(".block", {
-    duration: 0.9,
+    duration: 1,
     clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-    stagger: 0.06,
-    ease: "power2.inOut",
+    stagger: 0.075,
+    ease: "power3.inOut",
   });
 
   // Menu items fade in
   timeline.to(
     ".block-menu-title, .block-menu-item",
     {
-      duration: 0.25,
+      duration: 0.3,
       opacity: 1,
-      stagger: 0.04,
+      stagger: 0.05,
     },
-    "-=0.4",
+    "-=0.5",
   );
 
   // Toggle logic
   toggleButton.addEventListener("click", function () {
     toggleButton.classList.toggle("active");
-    nav?.classList.toggle("is-active");
 
     if (isOpen) {
       // close menu
       timeline.reverse();
       document.body.classList.remove("no-scroll");
-      document.body.classList.remove("menu-open");
-      toggleButton.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("menu-open")
     } else {
       // open menu
       timeline.play();
       document.body.classList.add("no-scroll");
-      document.body.classList.add("menu-open");
-      toggleButton.setAttribute("aria-expanded", "true");
+      document.body.classList.add("menu-open")
+
     }
     isOpen = !isOpen;
   });
 });
+
 // end 
 
 document.addEventListener("DOMContentLoaded", function () {

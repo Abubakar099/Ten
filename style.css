@@ -4158,28 +4158,12 @@
           color: #f0eee5;
       }
 
-      .logo-link,
-      .tenex-logo-nav {
-          transition: color 0.4s ease;
-      }
-
-      .nav_logo .logo-img {
-          display: block;
-          width: 100%;
-          height: auto;
-          transition: filter 0.4s ease;
-      }
-
-      body.menu-open .logo-link,
-      body.menu-open .tenex-logo-nav,
-      .nav.is-active .logo-link,
-      .nav.is-active .tenex-logo-nav {
-          color: #141414;
-      }
-
-      body.menu-open .nav_logo .logo-img,
-      .nav.is-active .nav_logo .logo-img {
+      body.menu-open .nav_logo img {
           filter: brightness(0);
+      }
+
+      .nav_logo img {
+          transition: filter 0.3s ease;
       }
 
       .nav_logo.text-color-dark {
